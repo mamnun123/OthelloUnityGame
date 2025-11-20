@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "IanActions",
+    "maps": [
+        {
+            "name": "Navigation",
+            "id": "b5199200-08f6-41e8-bc44-4d5062bc097c",
+            "actions": [
+                {
+                    "name": "Thumbstick Left",
+                    "type": "Value",
+                    "id": "b34fd12b-225b-4987-bce9-db8bf7a20374",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b589894c-a563-4bcf-b660-b4edea816cdd",
+                    "path": "<XRController>{LeftHand}/thumbstick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Thumbstick Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
