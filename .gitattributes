@@ -1,2 +1,7 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+git lfs install
+git lfs track "*.fbx"
+git lfs track "*.wav"
+git lfs track "*.png"
+git lfs track "*.mp4"
