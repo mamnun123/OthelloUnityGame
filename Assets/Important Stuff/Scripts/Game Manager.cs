@@ -68,10 +68,6 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
     {
         ExtendedLogger.LogInfo(GetType().Name, $"Local user is spawned and initialized. Name: {NetworkUser.LocalInstance.userName.Value}", this);
         Debug.Log("Check one two");
-        // Do I need to use IfServer here?
-        IDs.Add(NetworkManager.Singleton.LocalClientId);
-        scores.Add(0);
-        Debug.Log(NetworkManager.Singleton.LocalClientId);
     }
 
     //Remote user joined session and is fully initialized
@@ -79,10 +75,12 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
     {
         ExtendedLogger.LogInfo(GetType().Name, $"Remote user is spawned and initialized. Name: {user.userName.Value}", this);
         Debug.Log("Check three four");
-        // Do I need to use IfServer here?
-        IDs.Add(user.userId.Value);
-        scores.Add(0);
-        Debug.Log(user.userId.Value);
+        if (IsServer)
+        {
+            IDs.Add(user.userId.Value);
+            scores.Add(0);
+            Debug.Log(user.userId.Value);
+        }
     }
 
     //Local user disconnected
