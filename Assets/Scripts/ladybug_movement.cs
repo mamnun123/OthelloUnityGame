@@ -51,7 +51,7 @@ public class ladybug_movement : NetworkBehaviour
             angle++;
         }
 
-        GAMEMANAGER.SetTest(new NetworkVariable<int>(i));
+        GAMEMANAGER.SetTest(i);
         i++;
     }
 

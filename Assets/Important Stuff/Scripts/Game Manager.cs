@@ -17,7 +17,7 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
 
     void Start()
     {
-
+        test.OnValueChanged += OnTestValueChanged;
     }
 
     // Update is called once per frame
@@ -43,14 +43,21 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
         return test;
     }
 
-    public void SetTest(NetworkVariable<int> input)
+    public void SetTest(int value)
     {
-        this.test.Value = input.Value;
+        RequestSetTestNetVarRpc(value);
     }
 
+    [Rpc(SendTo.Server)]
+    private void RequestSetTestNetVarRpc(int value)
+    {
+        test.Value = value;
+    }
 
-
-
+    private void OnTestValueChanged(int oldValue, int newValue)
+    {
+        Debug.Log($"Received new test value: {newValue}. Old value was {oldValue}");
+    }
 
 
 

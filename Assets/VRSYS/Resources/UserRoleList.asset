@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: UserRoleList
   m_EditorClassIdentifier: 
   RoleEntries:
-  - Name: HMD
   - Name: Desktop
+  - Name: HMD
