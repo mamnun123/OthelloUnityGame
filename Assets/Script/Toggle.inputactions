@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "Toggle",
+    "maps": [
+        {
+            "name": "Navigation",
+            "id": "b5199200-08f6-41e8-bc44-4d5062bc097c",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "80b37988-f2f5-45a0-8d60-fbec43085df0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f8f99ced-ac26-491a-8ce3-311571dafe85",
+                    "path": "<XRController>{RightHand}/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

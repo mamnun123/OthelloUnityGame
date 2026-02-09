@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Network User Spawn Info
   m_EditorClassIdentifier: 
   userRole:
-    Name: HMD
-  userName: 
+    Name: Desktop
+  userName: HMD USer
   userColor: {r: 0, g: 0, b: 0, a: 1}

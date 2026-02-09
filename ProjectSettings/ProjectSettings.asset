@@ -70,6 +70,7 @@ PlayerSettings:
   androidStartInFullscreen: 1
   androidRenderOutsideSafeArea: 1
   androidUseSwappy: 0
+  androidDisplayOptions: 1
   androidBlitType: 0
   androidResizeableActivity: 1
   androidDefaultWindowWidth: 1920
@@ -86,6 +87,7 @@ PlayerSettings:
   muteOtherAudioSources: 0
   Prepare IOS For Recording: 0
   Force IOS Speakers When Recording: 0
+  audioSpatialExperience: 0
   deferSystemGesturesMode: 0
   hideHomeButton: 0
   submitAnalytics: 1
@@ -928,10 +930,10 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 38452846-5df0-46d5-8d77-174b66646560
+  cloudProjectId: 68c9e1a5-07de-4c6d-a106-f01b49dfedd2
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: My project (1) (1)
+  projectName: Othello Ladybug
   organizationId: ianmaxwellcollege2020
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

@@ -15,6 +15,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Samples/VRSYS Core/1.0.4/Sample Scene Setups/Scenes/No Network Setup/VRSYS-NoNetwork.unity
     guid: 24db1f21b370a59448679853cd24ae54
+  - enabled: 1
+    path: Assets/Samples/VRSYS Core/1.0.4/Sample Scene Setups/Scenes/Local Network
+      Setup/VRSYS-LocalNetwork.unity
+    guid: 42c214265124066428ac33c4370b1827
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 4b98cd7219eb20148b492b6fa2d7773a, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
