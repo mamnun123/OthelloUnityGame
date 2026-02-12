@@ -2,7 +2,7 @@ using UnityEngine;
 using Unity.Netcode;
 
 // 1. Define the Types globally so Bins can see them
-public enum TrashType { Plastic, Paper, Glass, Organic }
+public enum TrashType { Plastic, Paper, WhiteGlass, GreenGlass, BrownGlass, Landfill, Organic}
 
 public class TrashItem : NetworkBehaviour
 {

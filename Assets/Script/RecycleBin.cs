@@ -6,6 +6,8 @@ public class RecycleBin : NetworkBehaviour
 {
     public TrashType acceptedType; // Sets to "Plastic" for yellow bin, "Paper" for Blue, Oranic Gray, etc.
 
+    public GameManager GAMEMANAGER;
+
     // This triggers when any object with a Collider falls into the bin
     void OnTriggerEnter(Collider other)
     {
@@ -21,7 +23,9 @@ public class RecycleBin : NetworkBehaviour
             {
                 Debug.Log("Correct Bin!");
                 // Correct! Destroy the object (or add score)
-                trash.GetComponent<NetworkObject>().Despawn();
+                GAMEMANAGER.AddPoint((int)trash.GetComponent<NetworkObject>().OwnerClientId);
+                //trash.GetComponent<NetworkObject>().Despawn(false);
+                trash.transform.position = new Vector3(5, 5, 5);
             }
             else
             {
