@@ -17,6 +17,7 @@ public class flower_rotation : NetworkBehaviour
     {
         if (IsServer)
         {
+            Debug.Log(NetworkManager.Singleton.ConnectedClients);
             transform.LookAt(GetClosest());
             Debug.Log(GetClosest());
             transform.RotateAround(transform.position, transform.up, 180f);
@@ -43,6 +44,8 @@ public class flower_rotation : NetworkBehaviour
     }
 
     // Why isn't this working?
+    // For some reason, the host isn't spawning players
+
     public Transform GetPlayerTransform(ulong clientId)
     {
         if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client))
