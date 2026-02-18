@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Xml;
 using Unity.Netcode;
 using Unity.Services.Authentication;
 using UnityEditor.PackageManager;
@@ -11,6 +12,7 @@ public class flower_rotation : NetworkBehaviour
     private UserTransformManager userTransformManager;
 
     [SerializeField] private float _updateInterval = 1f;
+    private Transform closest;
 
     void Start()
     {
@@ -35,38 +37,26 @@ public class flower_rotation : NetworkBehaviour
 
     private Transform GetClosest()
     {
-        ulong closest = 0;
         Debug.Log("Current Client ID: " + NetworkManager.Singleton.LocalClientId);
-        /*
-        for (int i = 1; i < 4; i++)
-            if (NetworkManager.Singleton.ConnectedClients[(ulong)i].PlayerObject != null)
+        for (int i = 0; i < userTransformManager.userTransforms.Count; i++)
+        {
+            if (i == 0)
             {
-                if (Vector3.Distance(this.transform.position, NetworkManager.Singleton.ConnectedClients[(ulong)i].PlayerObject.transform.position) <
-                    Vector3.Distance(this.transform.position, NetworkManager.Singleton.ConnectedClients[(ulong)closest].PlayerObject.transform.position))
+                closest = userTransformManager.userTransforms[0];
+            } else
+            {
+                if (Vector3.Distance(userTransformManager.userTransforms[i].position, gameObject.transform.position) <
+                    Vector3.Distance(closest.position, gameObject.transform.position))
                 {
-                    closest = (ulong)i;
+                    closest = userTransformManager.userTransforms[i];
                 }
             }
-        */
-        return GetPlayerTransform(closest);
-
-    }
-
-    // Why isn't this working?
-    // For some reason, the host isn't spawning players
-
-    public Transform GetPlayerTransform(ulong clientId)
-    {
-        if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client))
-        {
-            if (client.PlayerObject != null)
-            {
-                return client.PlayerObject.transform;
-            }
         }
+        return closest;
 
-        return null; // player not spawned yet
     }
+
+    
 
     private IEnumerator UpdateRotations()
     {
@@ -80,11 +70,5 @@ public class flower_rotation : NetworkBehaviour
 }
 
 /*
- * What needs to be done:
- * 
- * Make sure that the distance between each user is calculated
- * Then whatever is the closest distance, Rotate to look at that user
- * 
- * Or just get the ID of the host
- * 
+ * Put networkObject on larger "flower container" object, instead of on all of the children
  */

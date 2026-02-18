@@ -29,6 +29,7 @@ public class UserTransformManager : MonoBehaviour, INetworkUserCallbacks
     public void OnLocalNetworkUserDisconnect()
     {
         /// ....
+        userTransforms.Remove(NetworkUser.LocalInstance.transform);
     }
 
     public void OnRemoteNetworkUserDisconnect(NetworkUser user)

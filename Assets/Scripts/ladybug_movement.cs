@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Windows;
 using Unity.Netcode;
+using VRSYS.Core.Networking;
 
 // This script is to move the ladybugs around. It gives them a target to go to and then guides the ladybug to the target.
 // If players make contact with the ladybug, they can "collect" them and then they fly around the player
@@ -15,6 +16,7 @@ public class ladybug_movement : NetworkBehaviour
     public Collider hitbox;
     private bool playerContact = false;
     private Vector3 newInput;
+    private GameObject save;
     private int angle;
     public GameManager GAMEMANAGER;
     private int i = 0;
@@ -59,6 +61,11 @@ public class ladybug_movement : NetworkBehaviour
     // If the player collects the ladybug, then enables the ladybug to rotate around the player
     private void OnTriggerEnter(Collider other)
     {
+
+        if (other.CompareTag("Player"))
+        {
+            save = other.GetComponentInParent<NetworkUser>().gameObject;
+        }
         if (other.gameObject.name == "Target")
         {
             target.gameObject.transform.position = new Vector3(Random.Range(-15.0f, 15.0f), Random.Range(0.0f, 3.0f), Random.Range(-15.0f, 15.0f));

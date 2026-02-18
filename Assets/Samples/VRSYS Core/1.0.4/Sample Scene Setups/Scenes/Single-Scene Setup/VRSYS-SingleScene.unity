@@ -2209,7 +2209,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 57138497710885640, guid: fc00086a5e7449d4b9d76a5a2f9b15bf, type: 3}
   m_PrefabInstance: {fileID: 1862432088}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1614700506}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0fa3e3edda5384c40bd51b3c358da7e4, type: 3}
@@ -7854,6 +7854,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8005775154114967754, guid: 31f5dbae72ba0b54b997dcc06a4c0824, type: 3}
   m_PrefabInstance: {fileID: 316277361}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1614700506 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4197346221904666461, guid: fc00086a5e7449d4b9d76a5a2f9b15bf, type: 3}
+  m_PrefabInstance: {fileID: 1862432088}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1614700509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614700506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26dcf30549471e74e84899133d86fa6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  userTransforms: []
 --- !u!1 &1628855763
 GameObject:
   m_ObjectHideFlags: 0
@@ -8224,6 +8242,7 @@ GameObject:
   - component: {fileID: 1690056321}
   - component: {fileID: 1690056320}
   - component: {fileID: 1690056318}
+  - component: {fileID: 1690056323}
   m_Layer: 0
   m_Name: Cylinder (1)
   m_TagString: Untagged
@@ -8293,7 +8312,19 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1690056323}
+        m_TargetAssemblyTypeName: ButtonLogic, Assembly-CSharp
+        m_MethodName: MyFunc
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
       m_Calls: []
@@ -8394,6 +8425,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1690056316}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1690056323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690056316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbdf01f343f4b7d4ca3dd880d1e6199f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1732245353
 GameObject:
   m_ObjectHideFlags: 0
@@ -8921,7 +8964,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4197346221904666461, guid: fc00086a5e7449d4b9d76a5a2f9b15bf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1614700509}
   m_SourcePrefab: {fileID: 100100000, guid: fc00086a5e7449d4b9d76a5a2f9b15bf, type: 3}
 --- !u!1 &1870662363
 GameObject:
@@ -10941,7 +10987,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3130830557821445414, guid: 0f874d7acb686f644b6043ba39bba74f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 17.00003
+      value: 16.99997
       objectReference: {fileID: 0}
     - target: {fileID: 3130830557849588012, guid: 0f874d7acb686f644b6043ba39bba74f, type: 3}
       propertyPath: m_AnchorMax.x

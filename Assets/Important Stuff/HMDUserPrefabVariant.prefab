@@ -1615,7 +1615,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5753805191827034314}
-  - component: {fileID: 7627770897703282757}
+  - component: {fileID: 7874046261718414820}
   m_Layer: 0
   m_Name: RightHand Interactors
   m_TagString: Untagged
@@ -1641,7 +1641,7 @@ Transform:
   - {fileID: 8971154541865571921}
   m_Father: {fileID: 2679059498078427805}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7627770897703282757
+--- !u!114 &7874046261718414820
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1650,19 +1650,48 @@ MonoBehaviour:
   m_GameObject: {fileID: 3169307180014289271}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b9b55271d0f4f14c84a4cde81687157, type: 3}
+  m_Script: {fileID: 11500000, guid: c27aeca2e65242a458bc2c5f588b200d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ray: {fileID: 5751438388406612291}
-  virtualHand: {fileID: 2851362364380618563}
-  useInteractorRayOrigin: 0
-  raycastOrigin: {fileID: 2679059498078427805}
-  useInteractorDistance: 0
-  raycastDistance: 30
-  useInteractorLayers: 1
-  raycastMask:
-    serializedVersion: 2
-    m_Bits: 0
+  ShowTopMostFoldoutHeaderGroup: 1
+  activeGroupIndex:
+    m_InternalValue: 1
+  groups:
+  - name: Ray
+    gameObject: {fileID: 5751438388406612291}
+    affectedBehaviours: []
+    affectedLocalBehaviours:
+    - {fileID: 3850980985117941321}
+    - {fileID: 7757356723528134816}
+    affectedRenderers:
+    - {fileID: 5590568281296908438}
+    affectedColliders: []
+    initialName: 
+  - name: Virtual Hand
+    gameObject: {fileID: 2851362364380618563}
+    affectedBehaviours: []
+    affectedLocalBehaviours:
+    - {fileID: 7757224813935989230}
+    affectedRenderers: []
+    affectedColliders:
+    - {fileID: 7094006800337175205}
+    initialName: 
+  appendStateToName: 1
+  cycleNext: 0
+  cycleNextInput:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Cycle Next Input
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: f36c3210-ccdf-4d53-865a-c9ec5936c0a8
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -6134702228956395362, guid: 266f96d8e11535e43a65a15b16b41116, type: 3}
+  stateLabel: {fileID: 8667059120951939741}
+  stateLabelHint: (click joystick to switch)
 --- !u!1 &3435193323809900415
 GameObject:
   m_ObjectHideFlags: 0
@@ -3482,7 +3511,7 @@ GameObject:
   - component: {fileID: 594239884952932559}
   m_Layer: 0
   m_Name: HMDUserPrefabVariant
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
