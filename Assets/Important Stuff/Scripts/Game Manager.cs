@@ -11,10 +11,17 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
 
     public NetworkVariable<int> test = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+    private enum GameMode
+    {
+        Menu,
+        Game
+    }
+
     public NetworkList<ulong> playerObjects = new NetworkList<ulong>();
     public NetworkList<int> scores = new NetworkList<int>();
     public NetworkList<int> modifiers = new NetworkList<int>();
     public NetworkVariable<int> time = new NetworkVariable<int>();
+    public NetworkVariable<int> trashRemaining = new NetworkVariable<int>();
 
 
     void Start()
@@ -31,10 +38,7 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
     // Update is called once per frame
     void Update()
     {
-        GetLocalPlayerNetworkObjectId((networkObjectId) =>
-        {
-            Debug.Log("Local player's NetworkObjectId (host or client): " + networkObjectId);
-        });
+       
     }
 
     public void AddPoint(int ID)
@@ -54,52 +58,9 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
         }
     }
 
-    public static void GetLocalPlayerNetworkObjectId(Action<ulong> callback)
+    public void SpawnTrash()
     {
-        // Check if NetworkManager exists
-        if (NetworkManager.Singleton == null)
-        {
-            Debug.LogWarning("NetworkManager not initialized yet!");
-            return;
-        }
 
-        // If the player object is already spawned, return immediately
-        if (NetworkManager.Singleton.LocalClient.PlayerObject != null)
-        {
-            callback?.Invoke(NetworkManager.Singleton.LocalClient.PlayerObject.NetworkObjectId);
-            return;
-        }
-
-        // Otherwise, wait for the player object to spawn
-        void OnNetworkSpawn()
-        {
-            var playerObject = NetworkManager.Singleton.LocalClient.PlayerObject;
-            if (playerObject != null)
-            {
-                callback?.Invoke(playerObject.NetworkObjectId);
-                // Unsubscribe after we get it
-                NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
-            }
-        }
-
-        // For hosts and clients: wait until the local client connects
-        void OnClientConnected(ulong clientId)
-        {
-            if (clientId == NetworkManager.Singleton.LocalClientId)
-            {
-                // Delay a frame to ensure player prefab has spawned
-                NetworkManager.Singleton.StartCoroutine(WaitForPlayerObject(OnNetworkSpawn));
-            }
-        }
-
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-    }
-
-    // Coroutine to wait a frame until the PlayerObject exists
-    private static System.Collections.IEnumerator WaitForPlayerObject(Action onReady)
-    {
-        yield return null; // wait one frame
-        onReady?.Invoke();
     }
 
 
