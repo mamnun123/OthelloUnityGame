@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Netcode;
 using Unity.Services.Authentication;
 using UnityEditor.PackageManager;
@@ -7,9 +8,17 @@ using VRSYS.Core.Networking;
 public class flower_rotation : NetworkBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private UserTransformManager userTransformManager;
+
+    [SerializeField] private float _updateInterval = 1f;
 
     void Start()
     {
+        userTransformManager = FindAnyObjectByType<UserTransformManager>();
+
+        Coroutine rotationCoroutine = StartCoroutine(UpdateRotations());
+
+        StopCoroutine(rotationCoroutine);
     }
 
     // This code gets the flower to always look at the player
@@ -57,6 +66,16 @@ public class flower_rotation : NetworkBehaviour
         }
 
         return null; // player not spawned yet
+    }
+
+    private IEnumerator UpdateRotations()
+    {
+        while (true)
+        {
+            //...
+
+            yield return new WaitForSeconds(_updateInterval);
+        }
     }
 }
 
