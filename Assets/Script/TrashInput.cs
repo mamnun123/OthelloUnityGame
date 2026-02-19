@@ -8,6 +8,8 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 // 1. Define the Types globally so Bins can see them
 public enum TrashType { Plastic, Paper, WhiteGlass, GreenGlass, BrownGlass, Landfill, Organic}
 
+[RequireComponent(typeof(NetworkObject))]
+[RequireComponent(typeof(XRGrabInteractable))]
 public class TrashItem : NetworkBehaviour
 {
     [Header("Settings")]
@@ -21,12 +23,25 @@ public class TrashItem : NetworkBehaviour
 
     private void Start()
     {
+       
         netObj = GetComponent<NetworkObject>();
         grabInteractable = GetComponent<XRGrabInteractable>();
 
         // Subscribe to grab events
         grabInteractable.selectEntered.AddListener(OnGrab);
         //grabInteractable.selectExited.AddListener(OnRelease);
+    }
+
+    private void Awake()
+    {
+        if (IsServer && netObj.OwnerClientId == 0) // Only server can change ownership
+        {
+            netObj.ChangeOwnership(1);
+        }
+        if (netObj.OwnerClientId == 1)
+        {
+            Debug.Log("I AM OTHER OWNER");
+        }
     }
 
     public override void OnNetworkSpawn()
@@ -74,7 +89,7 @@ public class TrashItem : NetworkBehaviour
     }
     */
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void RequestOwnershipServerRpc(ulong clientId)
     {
         netObj.ChangeOwnership(clientId);
