@@ -64,8 +64,10 @@ public class TrashItem : NetworkBehaviour
 
     private void ChangeDaOwnership(ulong newID)
     {
+        Debug.Log("Imma firin my lazuh");
         if (IsServer)
         {
+            Debug.Log("Bwawawawawawawawa");
             netObj.ChangeOwnership(newID);
         }
     }
