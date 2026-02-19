@@ -20,6 +20,7 @@ public class TrashItem : NetworkBehaviour
 
     private NetworkObject netObj;
     private XRGrabInteractable grabInteractable;
+    private ulong currOwner = 0;
 
     private void Start()
     {
@@ -30,7 +31,14 @@ public class TrashItem : NetworkBehaviour
         grabInteractable.selectEntered.AddListener(OnGrab);
     }
 
-
+    private void Update()
+    {
+        if (IsServer)
+        {
+            Debug.Log("Bwawawawawawawawa");
+            netObj.ChangeOwnership(currOwner);
+        }
+    }
 
     public override void OnNetworkSpawn()
     {
@@ -65,10 +73,6 @@ public class TrashItem : NetworkBehaviour
     private void ChangeDaOwnership(ulong newID)
     {
         Debug.Log("Imma firin my lazuh");
-        if (IsServer)
-        {
-            Debug.Log("Bwawawawawawawawa");
-            netObj.ChangeOwnership(newID);
-        }
+        currOwner = newID;
     }
 }
