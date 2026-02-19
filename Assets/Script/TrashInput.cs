@@ -20,9 +20,7 @@ public class TrashItem : NetworkBehaviour
 
     private NetworkObject netObj;
     private XRGrabInteractable grabInteractable;
-    private NetworkVariable<ulong> currOwner = new NetworkVariable<ulong>(0,
-        NetworkVariableReadPermission.Everyone,
-        NetworkVariableWritePermission.Everyone);
+    private NetworkVariable<ulong> currOwner = new NetworkVariable<ulong>(0);
 
     private void Start()
     {
