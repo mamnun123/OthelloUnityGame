@@ -58,7 +58,15 @@ public class TrashItem : NetworkBehaviour
         ulong localClientId = NetworkManager.Singleton.LocalClientId;
         if (!HasAuthority)
         {
-            netObj.ChangeOwnership(localClientId);
+            ChangeDaOwnership(localClientId);
+        }
+    }
+
+    private void ChangeDaOwnership(ulong newID)
+    {
+        if (IsServer)
+        {
+            netObj.ChangeOwnership(newID);
         }
     }
 }
