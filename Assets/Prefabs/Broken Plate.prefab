@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5589293832739928518}
   - component: {fileID: 7098554795773875919}
   - component: {fileID: 6351100567456273946}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Broken Plate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,4 +346,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  myType: 2
+  myType: 4

@@ -24,14 +24,14 @@ public class RecycleBin : NetworkBehaviour
                 Debug.Log("Correct Bin!");
                 // Correct! Destroy the object (or add score)
                 GAMEMANAGER.AddPoint((int)trash.GetComponent<NetworkObject>().OwnerClientId);
-                //trash.GetComponent<NetworkObject>().Despawn(false);
-                trash.transform.position = new Vector3(5, 5, 5);
-            }
+                GAMEMANAGER.trashRemaining.Value -= 1;
+                trash.GetComponent<NetworkObject>().Despawn();
+            }   
             else
             {
                 Debug.Log("WRONG BIN! Respawning...");
                 // Wrong! Reset position.
-                trash.Respawn();
+                trash.GetComponent<NetworkObject>().transform.position = new Vector3(Random.Range(-15f, 15f), 5.0f, Random.Range(-15f, 15f));
             }
         }
     }

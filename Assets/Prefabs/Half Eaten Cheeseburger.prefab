@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 1981011943161219318}
   - component: {fileID: 1947696555755434814}
   - component: {fileID: 5492765358855970932}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Half Eaten Cheeseburger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  myType: 3
+  myType: 5
 --- !u!114 &1947696555755434814
 MonoBehaviour:
   m_ObjectHideFlags: 0

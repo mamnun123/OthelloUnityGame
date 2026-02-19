@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 594239884952932559, guid: 809cce775431de842bae2eca7c27e046, type: 3}
+      propertyPath: leftTrigger.m_Action.m_Name
+      value: Left Trigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 594239884952932559, guid: 809cce775431de842bae2eca7c27e046, type: 3}
+      propertyPath: rightTrigger.m_Action.m_Name
+      value: Right Trigger
+      objectReference: {fileID: 0}
     - target: {fileID: 6840683655124811897, guid: 809cce775431de842bae2eca7c27e046, type: 3}
       propertyPath: m_Enabled
       value: 1

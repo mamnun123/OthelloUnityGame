@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8335277959129436219}
   - component: {fileID: 4124576218403222282}
   - component: {fileID: 3427849045038660362}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Apple Core Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  myType: 3
+  myType: 6
 --- !u!114 &4124576218403222282
 MonoBehaviour:
   m_ObjectHideFlags: 0

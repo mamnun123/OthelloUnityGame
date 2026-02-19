@@ -22,6 +22,7 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
     public NetworkList<int> modifiers = new NetworkList<int>();
     public NetworkVariable<int> time = new NetworkVariable<int>();
     public NetworkVariable<int> trashRemaining = new NetworkVariable<int>();
+    public NetworkVariable<bool> isThatOneAnnoyingLadybugStillFlyingAround = new NetworkVariable<bool>(true);
 
 
     void Start()
@@ -63,7 +64,10 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
 
     }
 
-
+    public void despawn()
+    {
+        
+    }
 
 
 

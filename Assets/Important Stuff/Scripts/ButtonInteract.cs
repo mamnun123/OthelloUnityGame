@@ -1,4 +1,5 @@
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -17,31 +18,38 @@ public class ButtonInteract : NetworkBehaviour
      */
 
     public GameManager GAMEMANAGER;
-    public ButtonPress Button;
     public GameObject scoreboard;
-    public bool isActive = false;
-    public XRSimpleInteractable interactable;
+    public NetworkVariable<bool> isActive = new NetworkVariable<bool>(true);
+    private Transform saveTransform;
 
     void Start()
     {
-        gameObject.SetActive(false);
+        saveTransform = transform;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Trash remaining: " + GAMEMANAGER.trashRemaining.Value);
+        if (isActive.Value == true)
+        {
+            transform.position = new Vector3 (0, 0, 0);
+        }
+        else if (isActive.Value == false)
+        {
+            Debug.Log("Fire!");
+            transform.position = new Vector3(0, -100f, 0);
+        }
+
+
+        // Put the feature here that respawns the start button when the trash is all gone
+        if (isActive.Value == false && GAMEMANAGER.trashRemaining.Value == 0)
+        {
+            isActive.Value = true;
+        }
+
         if (IsServer)
         {
-            if (isActive == false && NetworkManager.Singleton.StartServer())
-            {
-                gameObject.SetActive(true);
-                isActive = true;
-            }
-            // Put the feature here that respawns the start button when the trash is all gone
-            if (isActive == true)
-            {
-                
-            }
         }
     }
 }
