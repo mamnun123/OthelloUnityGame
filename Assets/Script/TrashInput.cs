@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using static UnityEngine.GraphicsBuffer;
 
 // 1. Define the Types globally so Bins can see them
 public enum TrashType { Plastic, Paper, WhiteGlass, GreenGlass, BrownGlass, Landfill, Organic}
@@ -18,13 +19,14 @@ public class TrashItem : NetworkBehaviour
     // We remember where we spawned so we can reset if put in wrong bin
     private Vector3 startPosition;
 
-    public NetworkObject netObj;
-    public XRGrabInteractable grabInteractable;
+    private NetworkObject netObj;
+    private XRGrabInteractable grabInteractable;
 
     private void Start()
     {
-      
 
+        netObj = GetComponent<NetworkObject>();
+        grabInteractable = GetComponent<XRGrabInteractable>();
         // Subscribe to grab events
         grabInteractable.selectEntered.AddListener(OnGrab);
         Debug.Log("LOUD CHECK");
