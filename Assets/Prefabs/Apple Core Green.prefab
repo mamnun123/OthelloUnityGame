@@ -179,6 +179,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   myType: 6
+  netObj: {fileID: 8741578610307762178}
+  grabInteractable: {fileID: 3427849045038660362}
 --- !u!114 &4124576218403222282
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,31 +18,20 @@ public class TrashItem : NetworkBehaviour
     // We remember where we spawned so we can reset if put in wrong bin
     private Vector3 startPosition;
 
-    private NetworkObject netObj;
-    private XRGrabInteractable grabInteractable;
+    public NetworkObject netObj;
+    public XRGrabInteractable grabInteractable;
 
     private void Start()
     {
-       
-        netObj = GetComponent<NetworkObject>();
-        grabInteractable = GetComponent<XRGrabInteractable>();
+      
 
         // Subscribe to grab events
         grabInteractable.selectEntered.AddListener(OnGrab);
+        Debug.Log("LOUD CHECK");
         //grabInteractable.selectExited.AddListener(OnRelease);
     }
 
-    private void Awake()
-    {
-        if (IsServer && netObj.OwnerClientId == 0) // Only server can change ownership
-        {
-            netObj.ChangeOwnership(1);
-        }
-        if (netObj.OwnerClientId == 1)
-        {
-            Debug.Log("I AM OTHER OWNER");
-        }
-    }
+
 
     public override void OnNetworkSpawn()
     {
