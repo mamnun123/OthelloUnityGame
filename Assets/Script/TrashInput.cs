@@ -35,7 +35,7 @@ public class TrashItem : NetworkBehaviour
     {
         if (IsServer)
         {
-            Debug.Log("Bwawawawawawawawa");
+            Debug.Log("Bwawawawawawawawa" + currOwner);
             netObj.ChangeOwnership(currOwner);
         }
     }
@@ -72,7 +72,7 @@ public class TrashItem : NetworkBehaviour
 
     private void ChangeDaOwnership(ulong newID)
     {
-        Debug.Log("Imma firin my lazuh");
+        Debug.Log("Imma firin my lazuh" + newID);
         currOwner = newID;
     }
 }
