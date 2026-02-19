@@ -66,13 +66,13 @@ public class TrashItem : NetworkBehaviour
         ulong localClientId = NetworkManager.Singleton.LocalClientId;
         if (!HasAuthority)
         {
-            ChangeDaOwnership(localClientId);
+            ChangeDaOwnershipServerRpc(localClientId);
         }
     }
 
 
-    [ServerRpc(RequireOwnership = false)]
-    private void ChangeDaOwnership(ulong newID)
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    private void ChangeDaOwnershipServerRpc(ulong newID)
     {
         Debug.Log("Imma firin my lazuh" + newID);
         currOwner.Value = newID;
