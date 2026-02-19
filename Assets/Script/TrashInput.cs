@@ -1,10 +1,9 @@
 using Unity.Netcode;
-using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit.Interactors;
-using static UnityEngine.GraphicsBuffer;
+
 
 // 1. Define the Types globally so Bins can see them
 public enum TrashType { Plastic, Paper, WhiteGlass, GreenGlass, BrownGlass, Landfill, Organic}
@@ -29,8 +28,6 @@ public class TrashItem : NetworkBehaviour
         grabInteractable = GetComponent<XRGrabInteractable>();
         // Subscribe to grab events
         grabInteractable.selectEntered.AddListener(OnGrab);
-        Debug.Log("LOUD CHECK");
-        //grabInteractable.selectExited.AddListener(OnRelease);
     }
 
 
@@ -51,47 +48,17 @@ public class TrashItem : NetworkBehaviour
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
     }
 
-    void PickupObject()
-    {
-        NetworkObject.ChangeOwnership(NetworkManager.Singleton.LocalClientId);
-    }
-
 
     // -------------------------------------------------
 
     private void OnGrab(SelectEnterEventArgs interactor)
     {
+        Debug.Log("Checkity check check");
         // Request ownership from server for the grabbing player
         ulong localClientId = NetworkManager.Singleton.LocalClientId;
-        if (netObj.OwnerClientId != localClientId)
+        if (!HasAuthority)
         {
-            RequestOwnershipServerRpc(localClientId);
+            netObj.ChangeOwnership(localClientId);
         }
     }
-
-    /*
-    private void OnRelease(SelectExitEventArgs interactor)
-    {
-        // Optional: return ownership to server when released
-        if (!IsServer)
-        {
-            ReturnOwnershipToServerServerRpc();
-        }
-    }
-    */
-
-    [ServerRpc(RequireOwnership = false)]
-    private void RequestOwnershipServerRpc(ulong clientId)
-    {
-        netObj.ChangeOwnership(clientId);
-    }
-
-    /*
-    [ServerRpc]
-    private void ReturnOwnershipToServerServerRpc()
-    {
-        netObj.ChangeOwnership(NetworkManager.ServerClientId);
-    }
-    */
-
 }
