@@ -20,7 +20,6 @@ public class TrashItem : NetworkBehaviour
 
     private NetworkObject netObj;
     private XRGrabInteractable grabInteractable;
-    private NetworkVariable<ulong> currOwner = new NetworkVariable<ulong>(0);
 
     private void Start()
     {
@@ -29,15 +28,6 @@ public class TrashItem : NetworkBehaviour
         grabInteractable = GetComponent<XRGrabInteractable>();
         // Subscribe to grab events
         grabInteractable.selectEntered.AddListener(OnGrab);
-    }
-
-    private void Update()
-    {
-        if (IsServer)
-        {
-            Debug.Log("Bwawawawawawawawa" + currOwner);
-            netObj.ChangeOwnership(currOwner.Value);
-        }
     }
 
     public override void OnNetworkSpawn()
@@ -61,20 +51,21 @@ public class TrashItem : NetworkBehaviour
 
     private void OnGrab(SelectEnterEventArgs interactor)
     {
-        Debug.Log("Checkity check check");
         // Request ownership from server for the grabbing player
         ulong localClientId = NetworkManager.Singleton.LocalClientId;
-        if (!HasAuthority)
+        if (netObj.OwnerClientId != localClientId)
         {
-            ChangeDaOwnershipServerRpc(localClientId);
+            RequestOwnershipServerRpc(localClientId);
         }
     }
 
 
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
-    private void ChangeDaOwnershipServerRpc(ulong newID)
+    private void RequestOwnershipServerRpc(ulong clientId)
     {
-        Debug.Log("Imma firin my lazuh" + newID);
-        currOwner.Value = newID;
+        if (netObj.IsSpawned)
+        {
+            netObj.ChangeOwnership(clientId);
+        }
     }
 }
