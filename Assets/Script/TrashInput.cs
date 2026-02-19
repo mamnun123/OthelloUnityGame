@@ -20,7 +20,9 @@ public class TrashItem : NetworkBehaviour
 
     private NetworkObject netObj;
     private XRGrabInteractable grabInteractable;
-    private NetworkVariable<ulong> currOwner = new NetworkVariable<ulong>(0);
+    private NetworkVariable<ulong> currOwner = new NetworkVariable<ulong>(0,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Everyone);
 
     private void Start()
     {
@@ -70,6 +72,8 @@ public class TrashItem : NetworkBehaviour
         }
     }
 
+
+    [ServerRpc(RequireOwnership = false)]
     private void ChangeDaOwnership(ulong newID)
     {
         Debug.Log("Imma firin my lazuh" + newID);
