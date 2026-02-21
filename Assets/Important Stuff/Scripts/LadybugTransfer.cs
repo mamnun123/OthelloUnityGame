@@ -57,8 +57,10 @@ public class LadybugTransfer : NetworkBehaviour
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestOwnershipServerRpc(ulong clientId)
     {
+        Debug.Log("Laser1");
         if (netObj.IsSpawned)
         {
+            Debug.Log("Laser2");
             netObj.ChangeOwnership(clientId);
         }
     }
