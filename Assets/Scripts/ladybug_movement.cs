@@ -28,6 +28,7 @@ public class ladybug_movement : NetworkBehaviour
     private bool firstScoreUpdate = false;
     private int oldClientID;
     private int count;
+    private int evidence = 1;
 
 
     // Starts by giving the ladybug a destination to fly to, then gets it to look at the destination
@@ -75,10 +76,15 @@ public class ladybug_movement : NetworkBehaviour
 
         // Function that adds the score to the first player that gets it. Different for if the host gets it.
         if (playerContact == true && firstScoreUpdate == false && (int)netObj.OwnerClientId != 0) {
-            GAMEMANAGER.AddModifier((int)netObj.OwnerClientId);
-            firstScoreUpdate = true;
-            oldClientID = (int)netObj.OwnerClientId;
-            Debug.Log("Non-client first count");
+            if (evidence == GAMEMANAGER.modifiers[(int)netObj.OwnerClientId])
+            {
+                oldClientID = (int)netObj.OwnerClientId;
+                GAMEMANAGER.AddModifier((int)netObj.OwnerClientId);
+                Debug.Log("This message is really annoying, wouldn't it be nice if it were posted to the console again?");
+            } else
+            {
+                firstScoreUpdate = true;
+            }
         } else if (playerContact == true && firstScoreUpdate == false && count != 10)
         {
             count++;
