@@ -67,6 +67,7 @@ public class ladybug_movement : NetworkBehaviour
 
     public int GetObjectID()
     {
+        Debug.Log("LADYBUG OWNER: " + (int)netObj.OwnerClientId);
         return (int)netObj.OwnerClientId;
     }
 
