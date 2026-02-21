@@ -6,6 +6,8 @@ using VRSYS.Core.Networking;
 public class UserTransformManager : MonoBehaviour, INetworkUserCallbacks
 {
     public List<Transform> userTransforms;
+    public List<Transform> ladybugs;
+    public bool hideLadybugs = true;
 
     private void Awake()
     {
@@ -36,5 +38,7 @@ public class UserTransformManager : MonoBehaviour, INetworkUserCallbacks
     {
         userTransforms.Remove(user.transform);
     }
+
+
 
 }

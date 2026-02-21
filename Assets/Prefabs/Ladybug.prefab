@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 6937591778021939029}
   - component: {fileID: 5869476057548860112}
   - component: {fileID: 4140682325248315750}
+  - component: {fileID: 3127135233528946908}
   m_Layer: 6
   m_Name: Hitbox
   m_TagString: Untagged
@@ -307,6 +308,31 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
+--- !u!114 &3127135233528946908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412294906855412387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3179387858
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &451232923279733817
 GameObject:
   m_ObjectHideFlags: 0
@@ -2484,7 +2510,7 @@ GameObject:
   - component: {fileID: 7288785637839575717}
   - component: {fileID: 161883762138247646}
   - component: {fileID: 1095568118680323295}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ladybug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2609,7 +2635,7 @@ MonoBehaviour:
   RotationMaxInterpolationTime: 0.1
   ScaleLerpSmoothing: 1
   ScaleMaxInterpolationTime: 0.1
-  AuthorityMode: 0
+  AuthorityMode: 1
   TickSyncChildren: 0
   UseUnreliableDeltas: 0
   SyncPositionX: 1

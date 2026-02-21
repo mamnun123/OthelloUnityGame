@@ -17,12 +17,12 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
         Game
     }
 
+    public int trashCount;
     public NetworkList<ulong> playerObjects = new NetworkList<ulong>();
     public NetworkList<int> scores = new NetworkList<int>();
     public NetworkList<int> modifiers = new NetworkList<int>();
     public NetworkVariable<int> time = new NetworkVariable<int>();
     public NetworkVariable<int> trashRemaining = new NetworkVariable<int>();
-    public NetworkVariable<bool> isThatOneAnnoyingLadybugStillFlyingAround = new NetworkVariable<bool>(true);
 
 
     void Start()
@@ -39,7 +39,10 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
     // Update is called once per frame
     void Update()
     {
-       
+        if (trashRemaining.Value == 0)
+        {
+            despawnLadybugs();
+        }
     }
 
     public void AddPoint(int ID)
@@ -48,6 +51,8 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
             scores[ID] += modifiers[ID];
             Debug.Log("Player 1 Score: " + scores[0]);
             Debug.Log("Player 2 Score: " + scores[1]);
+            Debug.Log("Player 3 Score: " + scores[2]);
+            Debug.Log("Player 4 Score: " + scores[3]);
         }
     }
 
@@ -59,14 +64,28 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
         }
     }
 
-    public void SpawnTrash()
+    public void SubtractModifier(int ID)
     {
-
+        if (IsServer)
+        {
+            modifiers[ID] -= 1;
+        }
     }
 
-    public void despawn()
+    public void despawnLadybugs()
     {
-        
+        if (IsServer)
+        {
+            GameObject[] allObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+            int targetLayer = LayerMask.NameToLayer("Ladybug");
+            foreach (GameObject obj in allObjects)
+            {
+                if (obj.layer == targetLayer)
+                {
+                    obj.GetComponent<NetworkObject>().Despawn();
+                }
+            }
+        }
     }
 
 

@@ -25,6 +25,7 @@ public class ladybug_movement : NetworkBehaviour
     private int i = 0;
     public XRSimpleInteractable interactable;
     private NetworkObject netObj;
+    private bool scoreUpdate = false;
 
 
     // Starts by giving the ladybug a destination to fly to, then gets it to look at the destination
@@ -41,20 +42,8 @@ public class ladybug_movement : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Ladybug Owner: " + netObj.OwnerClientId);
-        if (netObj.OwnerClientId != 0)
-        {
-            Debug.Log("Red Alert!");
-        }
-        if (IsOwner)
-        {
-            Debug.Log("I Am Owner.");
-        }
-        // Moves the ladybug if the player hasnt collected it yet.
-        if (thisOne == true)
-        {
-            transform.position = new Vector3(0, -100, 0);
-        } else if (playerContact == false) {
+        
+        if (playerContact == false) {
             transform.LookAt(destination);
             transform.position = transform.position + transform.forward * rate;
             transform.LookAt(new Vector3(-destination.x, -destination.y, -destination.z));
@@ -76,6 +65,11 @@ public class ladybug_movement : NetworkBehaviour
 
     }
 
+    public int GetObjectID()
+    {
+        return (int)netObj.OwnerClientId;
+    }
+
     // If the ladybug makes contact with the target, changes the placement of the target
     // If the player collects the ladybug, then enables the ladybug to rotate around the player
     private void OnTriggerEnter(Collider other)
@@ -83,7 +77,6 @@ public class ladybug_movement : NetworkBehaviour
         Debug.Log("Somewhat Contact Aquired");
         if (other.CompareTag("Player"))
         {
-            
             playerContact = true;
             Debug.Log("Contact Aquired");
         }

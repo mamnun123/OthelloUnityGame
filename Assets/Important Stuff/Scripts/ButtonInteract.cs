@@ -21,6 +21,7 @@ public class ButtonInteract : NetworkBehaviour
     public GameObject scoreboard;
     public NetworkVariable<bool> isActive = new NetworkVariable<bool>(true);
     private Transform saveTransform;
+    private Vector3 spawnPos = new Vector3(0, 0, 0);
 
     void Start()
     {
@@ -30,6 +31,7 @@ public class ButtonInteract : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        scoreboard.transform.position = spawnPos;
         Debug.Log("Trash remaining: " + GAMEMANAGER.trashRemaining.Value);
         if (isActive.Value == true)
         {
@@ -46,10 +48,6 @@ public class ButtonInteract : NetworkBehaviour
         if (isActive.Value == false && GAMEMANAGER.trashRemaining.Value == 0)
         {
             isActive.Value = true;
-        }
-
-        if (IsServer)
-        {
         }
     }
 }
