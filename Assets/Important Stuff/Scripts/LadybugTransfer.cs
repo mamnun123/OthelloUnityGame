@@ -29,7 +29,9 @@ public class LadybugTransfer : NetworkBehaviour
     {
         if (ladybug.playerContact == true && ladybug.player != null)
         {
-            GAMEMANAGER.SubtractModifier(oldClientID);
+            if (IsServer) {
+                GAMEMANAGER.SubtractModifier(oldClientID);
+            }
         }
         else
         {
@@ -38,7 +40,10 @@ public class LadybugTransfer : NetworkBehaviour
         ladybug.player = args.interactorObject.transform;
         ladybug.transform.position = new Vector3(ladybug.player.transform.position.x + 5f, ladybug.player.transform.position.y, ladybug.player.transform.position.z);
         oldClientID = ladybug.GetObjectID();
-        GAMEMANAGER.AddModifier(oldClientID);
+        if (IsServer)
+        {
+            GAMEMANAGER.AddModifier(oldClientID);
+        }
     }
 
 
