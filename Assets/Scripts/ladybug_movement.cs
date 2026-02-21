@@ -1,8 +1,8 @@
 using NUnit.Framework.Constraints;
 using System.Collections;
-using UnityEngine;
 using System.Collections;
 using Unity.Netcode;
+using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
@@ -84,6 +84,28 @@ public class ladybug_movement : NetworkBehaviour
         {
             target.gameObject.transform.position = new Vector3(Random.Range(-15.0f, 15.0f), Random.Range(0.0f, 3.0f), Random.Range(-15.0f, 15.0f));
             destination = target.gameObject.transform.position;
+        }
+    }
+
+    public void OnGrabLadybug(SelectEnterEventArgs interactor)
+    {
+        // Request ownership from server for the grabbing player
+        ulong localClientId = NetworkManager.Singleton.LocalClientId;
+        if (netObj.OwnerClientId != localClientId)
+        {
+            RequestOwnershipServerRpc(localClientId);
+        }
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void RequestOwnershipServerRpc(ulong clientId)
+    {
+        Debug.Log("Laser1");
+        if (netObj.IsSpawned)
+        {
+            Debug.Log("Laser2");
+            netObj.ChangeOwnership(clientId);
+
         }
     }
 }
