@@ -14,6 +14,7 @@ public class LadybugTransfer : NetworkBehaviour
     public ladybug_movement ladybug;
     public GameManager GAMEMANAGER;
     private int oldClientID;
+    private bool modifierAdded = false;
 
     private void Start()
     {
@@ -27,12 +28,11 @@ public class LadybugTransfer : NetworkBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void OnSelected(SelectEnterEventArgs args)
     {
-        if (ladybug.playerContact == true && ladybug.player != null)
+        if (ladybug.playerContact == true && ladybug.player != null && ladybug.GetObjectID() != oldClientID)
         {
-            if (IsServer) {
-                Debug.Log("Check it aww....");
-                GAMEMANAGER.SubtractModifier(oldClientID);
-            }
+            Debug.Log("Check it aww....");
+            GAMEMANAGER.SubtractModifier(oldClientID);
+            modifierAdded = false;
         }
         else
         {
@@ -41,10 +41,10 @@ public class LadybugTransfer : NetworkBehaviour
         ladybug.player = args.interactorObject.transform;
         ladybug.transform.position = new Vector3(ladybug.player.transform.position.x + 5f, ladybug.player.transform.position.y, ladybug.player.transform.position.z);
         oldClientID = ladybug.GetObjectID();
-        if (IsServer)
-        {
+        if (modifierAdded == false) {
             Debug.Log("Check it");
             GAMEMANAGER.AddModifier(oldClientID);
+            modifierAdded = true;
         }
     }
 
