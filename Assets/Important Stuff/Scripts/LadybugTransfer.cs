@@ -43,25 +43,8 @@ public class LadybugTransfer : NetworkBehaviour
 
 
 
-    private void OnGrab(SelectEnterEventArgs interactor)
+    public void OnGrab(SelectEnterEventArgs interactor)
     {
-        // Request ownership from server for the grabbing player
-        ulong localClientId = NetworkManager.Singleton.LocalClientId;
-        if (netObj.OwnerClientId != localClientId)
-        {
-            RequestOwnershipServerRpc(localClientId);
-        }
-    }
-
-
-    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
-    private void RequestOwnershipServerRpc(ulong clientId)
-    {
-        Debug.Log("Laser1");
-        if (netObj.IsSpawned)
-        {
-            Debug.Log("Laser2");
-            netObj.ChangeOwnership(clientId);
-        }
+        ladybug.OnGrabLadybug(interactor);
     }
 }
