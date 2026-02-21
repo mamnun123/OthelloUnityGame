@@ -77,6 +77,7 @@ public class ladybug_movement : NetworkBehaviour
         if (playerContact == true && firstScoreUpdate == false && (int)netObj.OwnerClientId != 0) {
             GAMEMANAGER.AddModifier((int)netObj.OwnerClientId);
             firstScoreUpdate = true;
+            oldClientID = (int)netObj.OwnerClientId;
             Debug.Log("Non-client first count");
         } else if (playerContact == true && firstScoreUpdate == false && count != 10)
         {
@@ -85,6 +86,7 @@ public class ladybug_movement : NetworkBehaviour
         {
             GAMEMANAGER.AddModifier(0);
             firstScoreUpdate = true;
+            oldClientID = 0;
             Debug.Log("Client first count");
         }
 
