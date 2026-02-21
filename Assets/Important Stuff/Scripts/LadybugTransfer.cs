@@ -30,6 +30,7 @@ public class LadybugTransfer : NetworkBehaviour
         if (ladybug.playerContact == true && ladybug.player != null)
         {
             if (IsServer) {
+                Debug.Log("Check it aww....");
                 GAMEMANAGER.SubtractModifier(oldClientID);
             }
         }
@@ -42,6 +43,7 @@ public class LadybugTransfer : NetworkBehaviour
         oldClientID = ladybug.GetObjectID();
         if (IsServer)
         {
+            Debug.Log("Check it");
             GAMEMANAGER.AddModifier(oldClientID);
         }
     }
