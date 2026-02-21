@@ -64,6 +64,15 @@ public class ladybug_movement : NetworkBehaviour
             angle++;
         }
 
+        // "Stealing" function
+        if (playerContact == true && firstScoreUpdate == true && oldClientID != (int)netObj.OwnerClientId)
+        {
+            GAMEMANAGER.SubtractModifier(oldClientID);
+            oldClientID = (int)netObj.OwnerClientId;
+            GAMEMANAGER.AddModifier(oldClientID);
+            Debug.Log("Stolen!");
+        }
+
         // Function that adds the score to the first player that gets it. Different for if the host gets it.
         if (playerContact == true && firstScoreUpdate == false && (int)netObj.OwnerClientId != 0) {
             GAMEMANAGER.AddModifier((int)netObj.OwnerClientId);
@@ -80,14 +89,6 @@ public class ladybug_movement : NetworkBehaviour
         }
 
 
-        // "Stealing" function
-        if (playerContact == true && oldClientID != (int)netObj.OwnerClientId)
-        {
-            GAMEMANAGER.SubtractModifier(oldClientID);
-            oldClientID = (int)netObj.OwnerClientId;
-            GAMEMANAGER.AddModifier(oldClientID);
-            Debug.Log("Stolen!");
-        }
     }
 
     public int GetObjectID()
