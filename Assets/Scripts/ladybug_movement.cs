@@ -25,7 +25,9 @@ public class ladybug_movement : NetworkBehaviour
     private int i = 0;
     public XRSimpleInteractable interactable;
     private NetworkObject netObj;
-    private bool scoreUpdate = false;
+    private bool firstScoreUpdate = false;
+    private int oldClientID;
+    private int count;
 
 
     // Starts by giving the ladybug a destination to fly to, then gets it to look at the destination
@@ -42,7 +44,6 @@ public class ladybug_movement : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         if (playerContact == false) {
             transform.LookAt(destination);
             transform.position = transform.position + transform.forward * rate;
@@ -63,6 +64,30 @@ public class ladybug_movement : NetworkBehaviour
             angle++;
         }
 
+        // Function that adds the score to the first player that gets it. Different for if the host gets it.
+        if (playerContact == true && firstScoreUpdate == false && (int)netObj.OwnerClientId != 0) {
+            GAMEMANAGER.AddModifier((int)netObj.OwnerClientId);
+            firstScoreUpdate = true;
+            Debug.Log("Non-client first count");
+        } else if (playerContact == true && firstScoreUpdate == false && count != 10)
+        {
+            count++;
+        } else if (count == 10 && firstScoreUpdate == false)
+        {
+            GAMEMANAGER.AddModifier(0);
+            firstScoreUpdate = true;
+            Debug.Log("Client first count");
+        }
+
+
+        // "Stealing" function
+        if (playerContact == true && oldClientID != (int)netObj.OwnerClientId)
+        {
+            GAMEMANAGER.SubtractModifier(oldClientID);
+            oldClientID = (int)netObj.OwnerClientId;
+            GAMEMANAGER.AddModifier(oldClientID);
+            Debug.Log("Stolen!");
+        }
     }
 
     public int GetObjectID()
