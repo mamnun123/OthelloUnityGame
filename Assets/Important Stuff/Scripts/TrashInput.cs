@@ -17,13 +17,13 @@ public class TrashItem : NetworkBehaviour
 
     // We remember where we spawned so we can reset if put in wrong bin
     private Vector3 startPosition;
-
     private NetworkObject netObj;
     private XRGrabInteractable grabInteractable;
 
     private void Start()
     {
 
+        // Gets necessary components
         netObj = GetComponent<NetworkObject>();
         grabInteractable = GetComponent<XRGrabInteractable>();
         // Subscribe to grab events
@@ -47,7 +47,7 @@ public class TrashItem : NetworkBehaviour
     }
 
 
-    // -------------------------------------------------
+    // Ownership transferral
 
     private void OnGrab(SelectEnterEventArgs interactor)
     {

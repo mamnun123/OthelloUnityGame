@@ -1,58 +1,54 @@
 using NUnit.Framework.Constraints;
 using System.Collections;
-using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
+
 // This script is to move the ladybugs around. It gives them a target to go to and then guides the ladybug to the target.
-// If players make contact with the ladybug, they can "collect" them and then they fly around the player
+// If players interact with the ladybug, they can "collect" them and then they fly around the player
 public class ladybug_movement : NetworkBehaviour
 {
-    public Vector3 destination;
-    public float rate = 0.1f;
-    public float randTime;
-    public SphereCollider target;
-    public Collider hitbox;
-    public bool playerContact = false;
-    private bool thisOne = false;
-    public Transform player;
-    private Vector3 newInput;
-    private GameObject save;
-    private int angle;
-    public GameManager GAMEMANAGER;
-    private int i = 0;
-    public XRSimpleInteractable interactable;
-    private NetworkObject netObj;
-    private bool firstScoreUpdate = false;
-    private int oldClientID;
-    private int count;
-    private int evidence = 1;
+    public Vector3 destination; // The vector of the ladybug's initial spawn, as well as it's 
+    private Vector3 newInput; // Vector3 that helps to move the ladybug from place to place
+    private int angle; // Angle that helps the ladybug move
+    private int oldClientID; // Saves the previous owner of the ladybug, helps redistribute the points during a steal.
+    private int count; // Buffer variable that helps with giving the host a modifier
+    private int evidence = 1; // Variable that's currently being used in rooting out a bug
+    public float rate = 0.1f; // How fast the ladybug's moving
+    public bool playerContact = false; // Boolean for if the ladybug has been collected by a player
+    private bool firstScoreUpdate = false; // Boolean for if the ladybug has been used to update a modifier
+    public SphereCollider target; // Target for a ladybug to travel to
+    public Transform player; // The transform of the player that's collected the ladybug
+    public GameManager GAMEMANAGER; // The game manager
+    public XRSimpleInteractable interactable; // The NetworkList that holds all of the user transforms
+    private NetworkObject netObj; // The ladybug's network object
 
 
     // Starts by giving the ladybug a destination to fly to, then gets it to look at the destination
     void Start()
     {
-        target = GameObject.Find("Target").GetComponent<SphereCollider>();
-        GAMEMANAGER = GameObject.Find("GAMEMANAGER").GetComponent<GameManager>();
-        destination = new Vector3(Random.Range(-15.0f, 15.0f), Random.Range(0.0f, 3.0f), Random.Range(-15.0f, 15.0f));
-        target.gameObject.transform.position = destination;
-        transform.LookAt(destination);
-        netObj = GetComponent<NetworkObject>();
+        target = GameObject.Find("Target").GetComponent<SphereCollider>(); // The target that the ladybug flies to. Moves when the ladybug interacts with it.
+        netObj = GetComponent<NetworkObject>(); // Gets the networkobject component of the ladybug.
+        GAMEMANAGER = GameObject.Find("GAMEMANAGER").GetComponent<GameManager>(); // The game manager
+        destination = new Vector3(Random.Range(-15.0f, 15.0f), Random.Range(0.0f, 3.0f), Random.Range(-15.0f, 15.0f)); // The initial spawn point for the ladybug.
+        target.gameObject.transform.position = destination; // ^^
+        transform.LookAt(destination); // Looks at where it's going
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        // If the ladybug hasn't been collected yet, it moves around the area, from target to target.
         if (playerContact == false) {
             transform.LookAt(destination);
             transform.position = transform.position + transform.forward * rate;
             transform.LookAt(new Vector3(-destination.x, -destination.y, -destination.z));
         }
 
-        // If the player has collected the ladybug, moves the ladybug around the player 
-        // (Currently does not work)
+        // If the player has collected the ladybug, moves the ladybug around the player.
         else
         {
             if (angle == 180)
@@ -65,17 +61,19 @@ public class ladybug_movement : NetworkBehaviour
             angle++;
         }
 
-        // "Stealing" function
+        // "Stealing" function. If the ladybug is interacted with and another player interacts with it, they can "steal" the ladybug.
         if (playerContact == true && firstScoreUpdate == true && oldClientID != (int)netObj.OwnerClientId)
         {
             GAMEMANAGER.SubtractModifier(oldClientID);
             oldClientID = (int)netObj.OwnerClientId;
             GAMEMANAGER.AddModifier(oldClientID);
-            Debug.Log("Stolen!");
         }
 
         // Function that adds the score to the first player that gets it. Different for if the host gets it.
         if (playerContact == true && firstScoreUpdate == false && (int)netObj.OwnerClientId != 0) {
+
+            // This is where the bug is. If a client picks up the ladybug that hasn't been owned by another player, then they don't get the point
+            // The first part of the if statement is currently set to an debug.log statement that fires every frame, since the modifier is never added to the client
             if (evidence == GAMEMANAGER.modifiers[(int)netObj.OwnerClientId])
             {
                 oldClientID = (int)netObj.OwnerClientId;
@@ -85,6 +83,9 @@ public class ladybug_movement : NetworkBehaviour
             {
                 firstScoreUpdate = true;
             }
+
+        // If the host picks up the ladybug and it hasn't been owned by another player, the program counts for 10 frames before it updates the modifier.
+        // This is to ensure that it's connected to the host.
         } else if (playerContact == true && firstScoreUpdate == false && count != 10)
         {
             count++;
@@ -93,17 +94,17 @@ public class ladybug_movement : NetworkBehaviour
             GAMEMANAGER.AddModifier(0);
             firstScoreUpdate = true;
             oldClientID = 0;
-            Debug.Log("Client first count");
         }
 
 
     }
 
+    // Returns the ID of the current owner
     public int GetObjectID()
     {
-        Debug.Log("LADYBUG OWNER: " + (int)netObj.OwnerClientId);
         return (int)netObj.OwnerClientId;
     }
+
 
     // If the ladybug makes contact with the target, changes the placement of the target
     // If the player collects the ladybug, then enables the ladybug to rotate around the player

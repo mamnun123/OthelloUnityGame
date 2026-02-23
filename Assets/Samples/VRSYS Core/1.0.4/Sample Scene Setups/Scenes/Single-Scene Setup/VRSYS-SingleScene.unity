@@ -41330,8 +41330,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userTransforms: []
-  ladybugs: []
-  hideLadybugs: 1
 --- !u!1 &1621023121
 GameObject:
   m_ObjectHideFlags: 0
@@ -47134,7 +47132,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 57138497710885640, guid: fc00086a5e7449d4b9d76a5a2f9b15bf, type: 3}
       propertyPath: trashCount
-      value: 8
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 57138497710885640, guid: fc00086a5e7449d4b9d76a5a2f9b15bf, type: 3}
+      propertyPath: ladybugCount
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2598965595709902040, guid: fc00086a5e7449d4b9d76a5a2f9b15bf, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -60236,7 +60238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3130830557821445414, guid: 0f874d7acb686f644b6043ba39bba74f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 17.00003
+      value: 16.99997
       objectReference: {fileID: 0}
     - target: {fileID: 3130830557849588012, guid: 0f874d7acb686f644b6043ba39bba74f, type: 3}
       propertyPath: m_AnchorMax.x

@@ -5,30 +5,23 @@ using UnityEngine;
 using VRSYS.Core.Logging;
 using VRSYS.Core.Networking;
 
+
+// Purpose of class: Manages important game data, such as player scores and modifiers.
 public class GameManager : NetworkBehaviour, INetworkUserCallbacks
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    public NetworkVariable<int> test = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
-    private enum GameMode
-    {
-        Menu,
-        Game
-    }
-
-    public int trashCount;
-    public NetworkList<ulong> playerObjects = new NetworkList<ulong>();
-    public NetworkList<int> scores = new NetworkList<int>();
-    public NetworkList<int> modifiers = new NetworkList<int>();
-    public NetworkVariable<int> time = new NetworkVariable<int>();
-    public NetworkVariable<int> trashRemaining = new NetworkVariable<int>();
+    public int trashCount; // How much total trash is spawned during the round
+    public int ladybugCount; // How many ladybugs are spawned during the round
+    public NetworkList<int> scores = new NetworkList<int>(); // All player scores
+    public NetworkList<int> modifiers = new NetworkList<int>(); // All player modifiers
+    public NetworkVariable<int> trashRemaining = new NetworkVariable<int>(); // Amount of trash currently in the scene
 
 
     void Start()
     {
-        
-        test.OnValueChanged += OnTestValueChanged;
+        // Initialises the lists to hold all of the right variables
         for (int i = 0; i < 4; i++)
         {
             scores.Add(0);
@@ -36,9 +29,10 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
         }
     }
 
-    // Update is called once per frame
+
     void Update()
     {
+        // Despawns ladybugs after all the trash is cleaned up.
         if (trashRemaining.Value == 0)
         {
             despawnLadybugs();
@@ -47,17 +41,15 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
 
     public void AddPoint(int ID)
     {
+        // Adds a point to target player. Triggered when a player puts trash in the right bin.
         if (IsServer) {
             scores[ID] += modifiers[ID];
-            Debug.Log("Player 1 Score: " + scores[0]);
-            Debug.Log("Player 2 Score: " + scores[1]);
-            Debug.Log("Player 3 Score: " + scores[2]);
-            Debug.Log("Player 4 Score: " + scores[3]);
         }
     }
 
     public void AddModifier(int ID)
     {
+        // Adds a modifier to target player. Triggered when a player collects a ladybug.
         if (IsServer)
         {
             modifiers[ID] += 1;
@@ -66,14 +58,16 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
 
     public void SubtractModifier(int ID)
     {
-        if (IsServer)
+        // Takes a modifier away from a player. Triggered when a ladybug is stolen from a player
+        if (IsServer && modifiers[ID] > 1)
         {
             modifiers[ID] -= 1;
         }
     }
 
     public void despawnLadybugs()
-    {
+    { 
+        // Function that despawns the ladybugs. Called when all of the trash is cleaned up.
         if (IsServer)
         {
             GameObject[] allObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
@@ -94,77 +88,23 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public void Check()
-    {
-        Debug.Log("User Joined");
-    }
-
-    public NetworkVariable<int> GetTest()
-    {
-        return test;
-    }
-
-    public void SetTest(int value)
-    {
-        RequestSetTestNetVarRpc(value);
-    }
-
-    [Rpc(SendTo.Server)]
-    private void RequestSetTestNetVarRpc(int value)
-    {
-        test.Value = value;
-    }
-
-    private void OnTestValueChanged(int oldValue, int newValue)
-    {
-        Debug.Log($"Received new test value: {newValue}. Old value was {oldValue}");
-    }
-
-
-
     //
-    // --------------------- USERS CONNECTING -----------------------------
+    // --------------------- FUNCTIONS SURROUNDING USERS CONNECTING -----------------------------
     // 
+    // These functions are used as backup debug.logs for if there's issues in the future.
+    //
 
 
-
+    // Local user joined and initialized
     public void OnLocalNetworkUserSetup()
     {
         ExtendedLogger.LogInfo(GetType().Name, $"Local user is spawned and initialized. Name: {NetworkUser.LocalInstance.userName.Value}", this);
-        Debug.Log("Check one two");
-        Debug.Log(NetworkManager.Singleton.LocalClient.PlayerObject);
     }
 
     //Remote user joined session and is fully initialized
     public void OnRemoteNetworkUserSetup(NetworkUser user)
     {
         ExtendedLogger.LogInfo(GetType().Name, $"Remote user is spawned and initialized. Name: {user.userName.Value}", this);
-        Debug.Log("Check three four");
-        if (IsServer)
-        {
-            //IDs.Add(user.userId.Value);
-            //scores.Add(0);
-            //modifiers.Add(1);
-            //Debug.Log(user.userId.Value);
-        }
     }
 
     //Local user disconnected
