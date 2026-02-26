@@ -111,13 +111,11 @@ public class GameManager : NetworkBehaviour, INetworkUserCallbacks
     public void OnLocalNetworkUserDisconnected()
     {
         ExtendedLogger.LogInfo(GetType().Name, $"Local user is disconnected.", this);
-        Debug.Log("Check five six");
     }
 
     //Remote user disconnected
     public void OnRemoteNetworkUserDisconnected(NetworkUser user)
     {
         ExtendedLogger.LogInfo(GetType().Name, $"Remote user is disconnected.", this);
-        Debug.Log("Check seven eight");
     }
 }

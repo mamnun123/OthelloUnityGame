@@ -114,10 +114,8 @@ public class trash_data : NetworkBehaviour
         {
             if (IsServer)
             {
-                Debug.Log("Nice!");
                 GAMEMANAGER.AddPoint((int)GetComponent<NetworkObject>().OwnerClientId);
                 transform.position = new Vector3(Random.Range(-15, 15), 15, Random.Range(-15, 15));
-                //Destroy(this);
             }
         }
         else if (other.gameObject.name == incorrectSensorOne ||
@@ -129,7 +127,6 @@ public class trash_data : NetworkBehaviour
         {
             if (IsServer)
             {
-                Debug.Log("Wrong bin buddy!");
                 transform.position = new Vector3(Random.Range(-15, 15), 15, Random.Range(-15, 15));
             }
         }

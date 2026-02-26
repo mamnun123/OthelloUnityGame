@@ -110,11 +110,9 @@ public class ladybug_movement : NetworkBehaviour
     // If the player collects the ladybug, then enables the ladybug to rotate around the player
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Somewhat Contact Aquired");
         if (other.CompareTag("Player"))
         {
             playerContact = true;
-            Debug.Log("Contact Aquired");
         }
         else if (other.gameObject.name == "Target")
         {
@@ -136,10 +134,8 @@ public class ladybug_movement : NetworkBehaviour
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void RequestOwnershipServerRpc(ulong clientId)
     {
-        Debug.Log("Laser1");
         if (netObj.IsSpawned)
         {
-            Debug.Log("Laser2");
             netObj.ChangeOwnership(clientId);
 
         }
