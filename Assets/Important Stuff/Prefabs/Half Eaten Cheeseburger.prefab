@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  myType: 5
+  myType: 6
 --- !u!114 &1947696555755434814
 MonoBehaviour:
   m_ObjectHideFlags: 0
